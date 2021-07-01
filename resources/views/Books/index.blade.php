@@ -4,16 +4,16 @@
     <div class="container">
         <div class="row">
         @forelse($books as $book)
-        <div class="col-md-3 col-sm-12 mb-5">
-            <div class="card">
-                <img class="" src="{{ $book->image ?? asset('images/No_Image_Available.jpg') }}" width="100%" alt="Book image">
+        <div class="col-md-3 col-sm-6 col-12 mb-5">
+            <div class="card shadow rounded">
+                <img class="rounded-top rounded-sm" src="{{ $book->image ?? asset('images/No_Image_Available.jpg') }}" height="200px" width="100%" alt="Book image">
                 <div class="card-body text-center">
                     <a href="{{route('books.show', $book)}}" class="text-decoration-none"><h5 class="card-title">{{ $book->title }}</h5></a>
                     <p class="card-text">
                         @forelse($book->authors as $author)
-                            {{$author->name}}
+                            {{$author->name}}@continue($loop->last),
                         @empty
-                            Author N/A
+                            N/A
                         @endforelse
                     </p>
 
@@ -22,7 +22,7 @@
         </div>
         @empty
             <div class="card">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <h5 class="text-center">No Records Found.</h5>
                 </div>
             </div>

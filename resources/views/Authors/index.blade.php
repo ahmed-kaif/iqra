@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <h4 class="text-center font-weight-bolder">Authors</h4>
         <table class="table table-striped">
             <thead>
                 <tr>

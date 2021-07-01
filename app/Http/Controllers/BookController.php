@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::orderBy('title')->paginate(10);
+        $books = Book::orderBy('title')->paginate(12);
         return view('Books.index', compact('books'));
     }
 
@@ -31,7 +32,12 @@ class BookController extends Controller
         $book->title = $request->title;
         $book->publisher = $request->publisher;
         $book->isbn = $request->isbn;
-        //TODO: image
+
+        if($request->hasFile('image')){
+            $path = $request->file('image')->store('book-images');
+            $book->image = $path;
+        }
+
         if($book->save()){
             return redirect()->route('books.show', $book)->with('success', 'Record Created Successfully.');
         }
@@ -62,15 +68,14 @@ class BookController extends Controller
         $book->title = $request->title;
         $book->publisher = $request->publisher;
         $book->isbn = $request->isbn;
-        //TODO: image
+
+        //updated Image in another method
 
         if($book->save()){
             return redirect()->route('books.show', $book)->with('success', 'Record Updated Successfully.');
         }
         else
             return back()->with('error', "Error! Record Couldn't be Created.");
-
-
     }
 
     public function destroy(Book $book)
@@ -79,5 +84,31 @@ class BookController extends Controller
             return back()->with('success', 'Record Deleted Successfully.'); //session message Session::has('success')
         else
             return back()->with('error', "Error! Record Couldn't be Deleted."); //session message Session::has('error')
+    }
+
+    public function changeImageForm(Book $book)
+    {
+        return view('Books.change-image', compact('book'));
+    }
+
+    public function changeImage(Request $request, Book $book)
+    {
+        $oldImage = $book->getOriginal('image');
+
+        if ($request->hasFile('image'))
+        {
+            if (Storage::exists($oldImage))
+            {
+                Storage::delete($oldImage);
+            }
+            $path = $request->file('image')->store('book-images');
+            $book->image = $path;
+        }
+
+        if($book->save()){
+            return redirect()->route('books.show', $book)->with('success', 'Image Uploaded Successfully.');
+        }
+        else
+            return back()->with('error', "Error! Record Couldn't be Created.");
     }
 }

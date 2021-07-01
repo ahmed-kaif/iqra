@@ -11,8 +11,19 @@ class Book extends Model
 
     protected $guarded = [];
 
+    public function getImageAttribute($value)
+    {
+        if($value)
+            return asset('storage/'.$value);
+    }
+
     public function authors()
     {
         return $this->hasMany(Author::class);
+    }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
     }
 }

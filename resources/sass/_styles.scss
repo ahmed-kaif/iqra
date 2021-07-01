@@ -1,0 +1,19 @@
+@import "variables";
+.navbar
+{
+    padding: 20px 0 20px 0 !important;
+    background-color: $nav;
+}
+.active
+{
+    color: $active !important;
+    font-weight: bold;
+}
+.shadow-custom
+{
+    box-shadow: 0 5px 10px 0 lightgray !important;
+}
+.text-underline
+{
+    text-decoration: underline;
+}

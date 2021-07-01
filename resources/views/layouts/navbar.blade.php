@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light sticky-top shadow-custom">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
@@ -15,6 +15,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @if(Request::is('authors*')) active @endif" href="{{ route('authors.index') }}">Authors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @if(Request::is('articles*')) active @endif" href="{{ route('articles.index') }}">Articles</a>
                 </li>
             </ul>
 

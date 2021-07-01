@@ -11,6 +11,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/feather.min.js') }}"></script>
+    <script src="//cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -23,11 +25,14 @@
 <body>
     <div id="app">
         @include('layouts.navbar')
-        @include('layouts.session-messages')
-        <main class="py-4">
+        <main class="container py-4">
+            @include('layouts.session-messages')
             @yield('content')
         </main>
     </div>
     @yield('scripts')
+    <script>
+        feather.replace();
+    </script>
 </body>
 </html>
